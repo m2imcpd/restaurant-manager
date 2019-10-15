@@ -11,6 +11,17 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Horaire
 {
+
+    const DAY = [
+        0 =>'Lundi',
+        1 =>'Mardi',
+        2 =>'Mercredi',
+        3 =>'Jeudi',
+        4 =>'Vendredi',
+        5 =>'Samedi',
+        6 =>'Dimanche',
+    ];
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -50,7 +61,16 @@ class Horaire
 
     public function getDay(): ?string
     {
-        return $this->day;
+        $index=0;
+        foreach (Horaire::DAY as $d => $j)
+        {
+            if($j == $this->day)
+            {
+                $index = $d;
+                break;
+            }
+        }
+        return self::DAY[$index];
     }
 
     public function setDay(string $day): self
