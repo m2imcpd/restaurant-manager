@@ -8,4 +8,24 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     </div>
 
+    <div class="container mt-5 mb-5">
+        <h2 class="mb-4">Liste des restaurants</h2>
+        <div class="row">
+            {% for restaurant in restaurants %}
+                <div class="col-3">
+                    <div class="card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <a href="{{ path('restaurant.show', {id: restaurant.id}) }}">{{ restaurant.name }}</a>
+                                </h5>
+                                <p class="card-text">{{ restaurant.description }}</p>
+                                <div class="text-primary" style="font-weight: bold;"><a href="{{ path('restaurant.show', {id: restaurant.id}) }}">Voir plus</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
