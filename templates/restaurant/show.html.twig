@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title restaurant.name %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1> {{ restaurant.name }} </h1>
+        <p>{{ restaurant.description }}</p>
+        <div class="row">
+            <div class="col-md-8">
+                <h2>Horaires</h2>
+                <table class="table table-striped">
+                    <tr>
+                        <td>Lundi</td>
+                        <td>10H00 19H00</td>
+                    </tr>
+                    <tr>
+                        <td>Mardi</td>
+                        <td>10H00 19H00</td>
+                    </tr>
+                    <tr>
+                        <td>Mercredi</td>
+                        <td>10H00 19H00</td>
+                    </tr>
+                    <tr>
+                        <td>Jeudi</td>
+                        <td>10H00 19H00</td>
+                    </tr>
+                    <tr>
+                        <td>Vendredi</td>
+                        <td>10H00 19H00</td>
+                    </tr>
+                    <tr>
+                        <td>Samedi</td>
+                        <td>10H00 19H00</td>
+                    </tr>
+                    <tr>
+                        <td>Dimanche</td>
+                        <td>Fermé</td>
+                    </tr>
+                </table>
+            </div>
+    </div>
+</div>
+{% endblock %}
