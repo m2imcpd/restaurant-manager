@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Admin Horaire'%}
+
+{% block body %}
+    <div class="container mt-4">
+
+        <h1>Gérer les Horaires</h1>
+
+        <div class="text-right mb-4">
+            <a href="{{ path('admin.horaire.new') }}" class="btn btn-primary">Créer un horaire</a>
+        </div>
+
+        {% for message in app.flashes('succes') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Titre </th>
+                <th>Actions </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for horaire in horaires %}
+                <tr>
+                    <td>{{ horaire.day }}</td>
+                    <td>
+                        <a href="{{ path('admin.horaire.edit', {id: horaire.id}) }}" class="btn btn-secondary">Editer</a>
+                        <form method="post" action="{{ path('admin.horaire.delete', {id: horaire.id}) }}" style="display: inline-block" onsubmit="return confirm('Voulez-vous vraiment supprimer ce bien ?')">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ horaire.id) }}">
+                            <button class="btn btn-danger">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+
+    </div>
+{% endblock %}
