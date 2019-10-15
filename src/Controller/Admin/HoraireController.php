@@ -46,5 +46,31 @@ class HoraireController extends AbstractController
         return $this->render('admin/horaire/index.html.twig', ['horaires' => $this->repository->findAll()]);
     }
 
+    /**
+     * Note:Permet l'ajout d'un Horaire de restaurant grâce à la génération d'un formulaire mappé sur l'entité Horaire
+     * avec une validation des donnéesau niveau du isValid et la persistance des données avec le object manager($em)
+     * suivie d'un message addflash passé a la vue et d'une redirection vers l'index
+     * @Route("/new", name="admin.horaire.new", methods="GET|POST")
+     * @param Request $request
+     * @return Response
+     */
+    public function new(Request $request): Response
+    {
+        $horaire = new Horaire();
+        $form = $this->createForm(HoraireType::class, $horaire);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($horaire);
+            $em->flush();
+
+            return $this->redirectToRoute('admin.horaire.index');
+        }
+
+        return $this->render('admin/horaire/new.html.twig', [
+            'horaire' => $horaire,
+            'form' => $form->createView(),
+        ]);
+    }
 }
