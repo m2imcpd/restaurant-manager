@@ -73,4 +73,46 @@ class RestaurantController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * Note:Permet l'édition d'un restaurant grâce à la génération d'un formulaire mappé sur l'entité restaurant
+     * avec une validation des donnéesau niveau du isValid et la persistance des données avec le object manager($em)
+     * suivie d'un message addflash passé a la vue et d'une redirection vers l'index
+     * @Route("/admin/restaurant/{id}", name="admin.restaurant.edit", methods="GET|POST")
+     * @param $id
+     * @return Response
+     */
+    public function edit($id, Request $request)
+    {
+        $restaurant = $this->repository->find($id);
+        $form = $this->createForm(RestaurantType::class,$restaurant);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $this->em->flush();
+            $this->addFlash('succes', 'Modifier avec succès');
+            return $this->redirectToRoute('admin.restaurant.index');
+        }
+        return $this->render('admin/restaurant/edit.html.twig',[
+            'restaurant' => $restaurant,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     *Note: Permet la suppression d'un restaurant avec une validation du CsrfToken du formulaire au niveau du isCsrfTokenValid
+     * suivie la suppression des données avec le object manager($em) et d'une redirection vers l'index
+     * suivie d'un message addflash passé a la vue
+     * @Route("/admin/restaurant/{id}", name="admin.restaurant.delete", methods="DELETE")
+     */
+    public function delete(Restaurant $restaurant, Request $request)
+    {
+        if ($this->isCsrfTokenValid('delete' . $restaurant->getId(), $request->get('_token'))){
+            $this->em->remove($restaurant);
+            $this->em->flush();
+            $this->addFlash('succes', 'Supprimer avec succès');
+            return $this->redirectToRoute('admin.restaurant.index');
+        }
+
+    }
 }
