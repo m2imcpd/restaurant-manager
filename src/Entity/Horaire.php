@@ -75,7 +75,16 @@ class Horaire
 
     public function setDay(string $day): self
     {
-        $this->day = $day;
+        $index="";
+        foreach (Horaire::DAY as $d => $j)
+        {
+            if($d == $day)
+            {
+                $index = $j;
+                break;
+            }
+        }
+        $this->day = $index;
 
         return $this;
     }
