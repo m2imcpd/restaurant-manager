@@ -1,0 +1,10 @@
+
+{{ form_start(form) }}
+<div class="row">
+    <div class="col-md-4">{{ form_row(form.day) }}</div>
+</div>
+<div class="row"><div class="col-md-4">{{ form_row(form.open_hour_at) }}</div></div>
+<div class="row"><div class="col-md-4">{{ form_row(form.close_hour_at) }}</div></div>
+{{ form_widget(form) }}
+<button class="btn btn-primary">{{ button|default('Enregistrer') }}</button>
+{{ form_end(form) }}
