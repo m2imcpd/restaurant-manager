@@ -73,4 +73,50 @@ class HoraireController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * Note:Permet l'édition d'un Horaire de restaurant grâce à la génération d'un formulaire mappé sur l'entité Horaire
+     * avec une validation des données au niveau du isValid et la persistance des données avec le object manager($em)
+     * suivie d'un message addflash passé a la vue et d'une redirection vers l'index
+     * @Route("/{id}/edit", name="admin.horaire.edit", methods="GET|POST")
+     * @param Request $request
+     * @param Horaire $horaire
+     * @return Response
+     */
+    public function edit(Request $request, Horaire $horaire): Response
+    {
+        $form = $this->createForm(HoraireType::class, $horaire);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('admin.horaire.index', ['id' => $horaire->getId()]);
+        }
+
+        return $this->render('admin/horaire/edit.html.twig', [
+            'horaire' => $horaire,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * Note: Permet la suppression d'un Horaire de restaurant avec une validation du CsrfToken du formulaire au niveau du isCsrfTokenValid
+     * suivie la suppression des données avec le object manager($em) et d'une redirection vers l'index
+     * suivie d'un message addflash passé a la vue
+     * @Route("/{id}", name="admin.horaire.delete", methods="DELETE")
+     * @param Request $request
+     * @param Horaire $horaire
+     * @return Response
+     */
+    public function delete(Request $request, Horaire $horaire): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$horaire->getId(), $request->request->get('_token'))) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($horaire);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('admin.horaire.index');
+    }
 }
