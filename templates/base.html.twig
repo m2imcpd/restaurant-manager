@@ -9,6 +9,8 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a class="navbar-brand" href="{{ path('home') }}">Restaurant Manager</a>
+    <a class="navbar-brand" href="{{ path('admin.restaurant.index') }}"> Ajouter un restaurant</a>
+    <a class="navbar-brand" href="{{ path('admin.horaire.index') }}"> Ajouter un Horaire</a>
 </nav>
 {% block body %}{% endblock %}
 {% block javascripts %}{% endblock %}
